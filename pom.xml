@@ -25,6 +25,7 @@ accordingly
 
   <modules>
     <module>student</module>
+    <module>phonebill</module>
   </modules>
 
   <inceptionYear>2022</inceptionYear>

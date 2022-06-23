@@ -17,9 +17,27 @@ public class StudentTest
 
   @Test
   void studentNamedPatIsNamedPat() {
+    // GIVEN that there is a student named "Pat"
     String name = "Pat";
-    var pat = new Student(name, new ArrayList<>(), 0.0, "Doesn't matter");
+    var pat = createStudentNamed(name);
+
+    // WHEN Pat's name is requested
+    // THEN Pat's name is "Pat"
     assertThat(pat.getName(), equalTo(name));
+  }
+
+  private Student createStudentNamed(String name) {
+    return new Student(name, new ArrayList<>(), 0.0, "Doesn't matter");
+  }
+
+  @Test
+  void allStudentsSayThisClassIsTooMuchWork() {
+    // GIVEN that there is a student
+    var pat = createStudentNamed("Student");
+
+    // WHEN Pat is asked to say something
+    // THEN Pat says "This class is too much work"
+    assertThat(pat.says(), equalTo("This class is too much work"));
   }
 
 }

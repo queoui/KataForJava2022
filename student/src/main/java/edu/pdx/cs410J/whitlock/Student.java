@@ -8,9 +8,11 @@ import java.util.ArrayList;
 /**                                                                                 
  * This class is represents a <code>Student</code>.                                 
  */                                                                                 
-public class Student extends Human {                                                
-                                                                                    
-  /**                                                                               
+public class Student extends Human {
+
+  private Gender gender;
+
+  /**
    * Creates a new <code>Student</code>                                             
    *                                                                                
    * @param name                                                                    
@@ -23,8 +25,9 @@ public class Student extends Human {
    * @param gender                                                                  
    *        The student's gender ("male", "female", or "other", case insensitive)
    */                                                                               
-  public Student(String name, ArrayList<String> classes, double gpa, String gender) {
+  public Student(String name, ArrayList<String> classes, double gpa, Gender gender) {
     super(name);
+    this.gender = gender;
   }
 
   /**                                                                               
@@ -71,8 +74,8 @@ public class Student extends Human {
 
     } else {
       String name = args[0];
-      validateGender(args[1]);
-      return new Student(name, new ArrayList<>(), 1.23, "other");
+      Gender gender = validateGender(args[1]);
+      return new Student(name, new ArrayList<>(), 1.23, gender);
     }
   }
 
@@ -89,6 +92,10 @@ public class Student extends Human {
     }
 
     throw new UnrecognizedGenderException(gender);
+  }
+
+  public Gender getGender() {
+    return this.gender;
   }
 
   @VisibleForTesting

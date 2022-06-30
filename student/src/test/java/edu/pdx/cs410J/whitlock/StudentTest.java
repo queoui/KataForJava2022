@@ -10,7 +10,6 @@ import static edu.pdx.cs410J.whitlock.Student.createStudentFrom;
 import static edu.pdx.cs410J.whitlock.Student.validateGender;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -34,7 +33,7 @@ public class StudentTest
   }
 
   private Student createStudentNamed(String name) {
-    return new Student(name, new ArrayList<>(), 0.0, "Doesn't matter");
+    return new Student(name, new ArrayList<>(), 0.0, Gender.OTHER);
   }
 
   @Test
@@ -116,5 +115,11 @@ public class StudentTest
     String name = "Dave";
     Student student = createStudentFrom(name, "male", "3.64");
     assertThat(student.getName(), equalTo(name));
+  }
+
+  @Test
+  void canCreateStudentWithExpectedGender() throws UnrecognizedGenderException, MissingCommandLineArguments {
+    Student student = createStudentFrom("Dave", "male", "3.64");
+    assertThat(student.getGender(), equalTo(Gender.MALE));
   }
 }

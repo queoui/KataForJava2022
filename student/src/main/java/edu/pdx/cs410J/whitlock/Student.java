@@ -68,7 +68,26 @@ public class Student extends Human {
       return "Missing GPA";
 
     } else {
+      Gender gender = validateGender(args[1]);
+      if (gender == null) {
+        return "Unrecognized gender";
+      }
       return null;
     }
+  }
+
+  @VisibleForTesting
+  static Gender validateGender(String gender) {
+    if (gender.equalsIgnoreCase("other")) {
+      return Gender.OTHER;
+
+    } else if (gender.equalsIgnoreCase("female")) {
+      return Gender.FEMALE;
+
+    } else if (gender.equalsIgnoreCase("male")) {
+      return Gender.MALE;
+    }
+
+    return null;
   }
 }

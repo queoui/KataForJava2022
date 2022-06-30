@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static edu.pdx.cs410J.whitlock.Student.validateArguments;
+import static edu.pdx.cs410J.whitlock.Student.validateGender;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -60,6 +61,41 @@ public class StudentTest
   @Test
   void studentEnrolledInZeroClassesIsValid() {
     assertThat(validateArguments("Dave", "male", "3.64"), nullValue());
+  }
+  
+  @Test
+  void unrecognizedGenderReturnUnrecognizedGender() {
+    assertThat(validateArguments("Dave", "unrecognized", "3.64"), equalTo("Unrecognized gender"));
+  }
+
+  @Test
+  void otherIsValidGender() {
+    assertThat(validateGender("other"), equalTo(Gender.OTHER));
+  }
+
+  @Test
+  void OTHERIsValidGender() {
+    assertThat(validateGender("OTHER"), equalTo(Gender.OTHER));
+  }
+
+  @Test
+  void femaleIsValidGender() {
+    assertThat(validateGender("female"), equalTo(Gender.FEMALE));
+  }
+
+  @Test
+  void FEMALEIsValidGender() {
+    assertThat(validateGender("FEMALE"), equalTo(Gender.FEMALE));
+  }
+
+  @Test
+  void maleIsValidGender() {
+    assertThat(validateGender("male"), equalTo(Gender.MALE));
+  }
+
+  @Test
+  void MALEIsValidGender() {
+    assertThat(validateGender("MALE"), equalTo(Gender.MALE));
   }
 
 }

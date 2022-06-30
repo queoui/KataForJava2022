@@ -62,7 +62,10 @@ public class Student extends Human {
       return "Missing command line arguments";
 
     } else if (args.length == 1) {
-      return "Not enough arguments";
+      return "Missing gender";
+
+    } else if (args.length == 2) {
+      return "Missing GPA";
 
     } else {
       return null;

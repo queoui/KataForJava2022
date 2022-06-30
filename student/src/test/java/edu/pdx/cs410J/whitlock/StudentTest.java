@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static edu.pdx.cs410J.whitlock.Student.validateArguments;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
@@ -41,8 +43,23 @@ public class StudentTest
   }
 
   @Test
-  void zeroArgumentsReturnsMissingCommandLineArguements() {
-    assertThat(Student.validateArguments(), equalTo("Missing command line arguments"));
+  void zeroArgumentsReturnsMissingCommandLineArguments() {
+    assertThat(validateArguments(), equalTo("Missing command line arguments"));
+  }
+
+  @Test
+  void onlyOneArgumentReturnsMissingGender() {
+    assertThat(validateArguments("Name"), equalTo("Missing gender"));
+  }
+
+  @Test
+  void onlyNameAndGenderReturnsMissingGpa() {
+    assertThat(validateArguments("Name", "Gender"), equalTo("Missing GPA"));
+  }
+
+  @Test
+  void studentEnrolledInZeroClassesIsValid() {
+    assertThat(validateArguments("Dave", "male", "3.64"), nullValue());
   }
 
 }

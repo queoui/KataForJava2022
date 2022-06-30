@@ -29,9 +29,9 @@ class StudentIT extends InvokeMainTestCase {
   }
 
   @Test
-  void onlyNamePrintsNotEnoughArgumentsToStandardError() {
+  void onlyNamePrintsMissingGenderToStandardError() {
     MainMethodResult result = invokeMain(Student.class, "Dave");
-    assertThat(result.getTextWrittenToStandardError(), equalTo("Not enough arguments\n"));
+    assertThat(result.getTextWrittenToStandardError(), equalTo("Missing gender\n"));
   }
 
 }

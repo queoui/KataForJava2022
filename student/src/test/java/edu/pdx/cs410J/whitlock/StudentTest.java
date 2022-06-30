@@ -40,4 +40,9 @@ public class StudentTest
     assertThat(student.says(), equalTo("This class is too much work"));
   }
 
+  @Test
+  void zeroArgumentsReturnsMissingCommandLineArguements() {
+    assertThat(Student.validateArguments(), equalTo("Missing command line arguments"));
+  }
+
 }

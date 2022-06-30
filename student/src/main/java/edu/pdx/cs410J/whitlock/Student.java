@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.whitlock;
 
+import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.lang.Human;
 
 import java.util.ArrayList;
@@ -48,12 +49,23 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
+    String errorMessage = validateArguments(args);
+
+    if (errorMessage != null) {
+      System.err.println(errorMessage);
+    }
+  }
+
+  @VisibleForTesting
+  static String validateArguments(String... args) {
     if (args.length == 0) {
-      System.err.println("Missing command line arguments");
+      return "Missing command line arguments";
 
     } else if (args.length == 1) {
-      System.err.println("Not enough arguments");
-    }
+      return "Not enough arguments";
 
+    } else {
+      return null;
+    }
   }
 }

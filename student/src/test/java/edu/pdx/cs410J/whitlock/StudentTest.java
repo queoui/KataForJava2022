@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.whitlock;
 
+import edu.pdx.cs410J.whitlock.Student.UnrecognizedGenderException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import static edu.pdx.cs410J.whitlock.Student.validateGender;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the Student class.  In addition to the JUnit annotations,
@@ -44,57 +46,60 @@ public class StudentTest
   }
 
   @Test
-  void zeroArgumentsReturnsMissingCommandLineArguments() {
+  void zeroArgumentsReturnsMissingCommandLineArguments() throws UnrecognizedGenderException {
     assertThat(validateArguments(), equalTo("Missing command line arguments"));
   }
 
   @Test
-  void onlyOneArgumentReturnsMissingGender() {
+  void onlyOneArgumentReturnsMissingGender() throws UnrecognizedGenderException {
     assertThat(validateArguments("Name"), equalTo("Missing gender"));
   }
 
   @Test
-  void onlyNameAndGenderReturnsMissingGpa() {
+  void onlyNameAndGenderReturnsMissingGpa() throws UnrecognizedGenderException {
     assertThat(validateArguments("Name", "Gender"), equalTo("Missing GPA"));
   }
 
   @Test
-  void studentEnrolledInZeroClassesIsValid() {
+  void studentEnrolledInZeroClassesIsValid() throws UnrecognizedGenderException {
     assertThat(validateArguments("Dave", "male", "3.64"), nullValue());
   }
   
   @Test
-  void unrecognizedGenderReturnUnrecognizedGender() {
-    assertThat(validateArguments("Dave", "unrecognized", "3.64"), equalTo("Unrecognized gender"));
+  void unrecognizedGenderThrowsUnrecognizedGenderException() {
+    String bogus = "bogus";
+    UnrecognizedGenderException ex =
+      assertThrows(UnrecognizedGenderException.class, () -> validateGender(bogus));
+    assertThat(ex.getUnrecognizedGender(), equalTo(bogus));
   }
 
   @Test
-  void otherIsValidGender() {
+  void otherIsValidGender() throws UnrecognizedGenderException {
     assertThat(validateGender("other"), equalTo(Gender.OTHER));
   }
 
   @Test
-  void OTHERIsValidGender() {
+  void OTHERIsValidGender() throws UnrecognizedGenderException {
     assertThat(validateGender("OTHER"), equalTo(Gender.OTHER));
   }
 
   @Test
-  void femaleIsValidGender() {
+  void femaleIsValidGender() throws UnrecognizedGenderException {
     assertThat(validateGender("female"), equalTo(Gender.FEMALE));
   }
 
   @Test
-  void FEMALEIsValidGender() {
+  void FEMALEIsValidGender() throws UnrecognizedGenderException {
     assertThat(validateGender("FEMALE"), equalTo(Gender.FEMALE));
   }
 
   @Test
-  void maleIsValidGender() {
+  void maleIsValidGender() throws UnrecognizedGenderException {
     assertThat(validateGender("male"), equalTo(Gender.MALE));
   }
 
   @Test
-  void MALEIsValidGender() {
+  void MALEIsValidGender() throws UnrecognizedGenderException {
     assertThat(validateGender("MALE"), equalTo(Gender.MALE));
   }
 

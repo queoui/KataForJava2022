@@ -34,4 +34,10 @@ class StudentIT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), equalTo("Missing gender\n"));
   }
 
+  @Test
+  void unrecognizedGenderIsWrittenToStandardError() {
+    MainMethodResult result = invokeMain(Student.class, "Dave", "bogus", "3.64");
+    assertThat(result.getTextWrittenToStandardError(), equalTo("Unrecognized gender: bogus\n"));
+  }
+
 }

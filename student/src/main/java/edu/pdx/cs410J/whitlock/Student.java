@@ -49,15 +49,21 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    String errorMessage = validateArguments(args);
+    String errorMessage = null;
+    try {
+      errorMessage = validateArguments(args);
+      if (errorMessage != null) {
+        System.err.println(errorMessage);
+      }
 
-    if (errorMessage != null) {
-      System.err.println(errorMessage);
+    } catch (UnrecognizedGenderException e) {
+      System.err.println(e.getMessage());
     }
+
   }
 
   @VisibleForTesting
-  static String validateArguments(String... args) {
+  static String validateArguments(String... args) throws UnrecognizedGenderException {
     if (args.length == 0) {
       return "Missing command line arguments";
 
@@ -77,7 +83,7 @@ public class Student extends Human {
   }
 
   @VisibleForTesting
-  static Gender validateGender(String gender) {
+  static Gender validateGender(String gender) throws UnrecognizedGenderException {
     if (gender.equalsIgnoreCase("other")) {
       return Gender.OTHER;
 
@@ -88,6 +94,24 @@ public class Student extends Human {
       return Gender.MALE;
     }
 
-    return null;
+    throw new UnrecognizedGenderException(gender);
+  }
+
+  @VisibleForTesting
+  static class UnrecognizedGenderException extends Exception {
+    private final String unrecognized;
+
+    public UnrecognizedGenderException(String unrecognized) {
+      this.unrecognized = unrecognized;
+    }
+
+    public String getUnrecognizedGender() {
+      return this.unrecognized;
+    }
+
+    @Override
+    public String getMessage() {
+      return "Unrecognized gender: " + this.getUnrecognizedGender();
+    }
   }
 }

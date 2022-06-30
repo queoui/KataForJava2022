@@ -48,6 +48,12 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    System.err.println("Missing command line arguments");
+    if (args.length == 0) {
+      System.err.println("Missing command line arguments");
+
+    } else if (args.length == 1) {
+      System.err.println("Not enough arguments");
+    }
+
   }
 }

@@ -70,8 +70,9 @@ public class Student extends Human {
       throw new MissingCommandLineArguments("Missing GPA");
 
     } else {
+      String name = args[0];
       validateGender(args[1]);
-      return null;
+      return new Student(name, new ArrayList<>(), 1.23, "other");
     }
   }
 

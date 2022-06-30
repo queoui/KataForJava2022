@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import static edu.pdx.cs410J.whitlock.Student.createStudentFrom;
 import static edu.pdx.cs410J.whitlock.Student.validateGender;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -69,7 +70,7 @@ public class StudentTest
 
   @Test
   void studentEnrolledInZeroClassesIsValid() throws UnrecognizedGenderException, MissingCommandLineArguments {
-    assertThat(createStudentFrom("Dave", "male", "3.64"), nullValue());
+    assertThat(createStudentFrom("Dave", "male", "3.64"), notNullValue());
   }
   
   @Test
@@ -110,4 +111,10 @@ public class StudentTest
     assertThat(validateGender("MALE"), equalTo(Gender.MALE));
   }
 
+  @Test
+  void canCreateStudentWithExpectedName() throws UnrecognizedGenderException, MissingCommandLineArguments {
+    String name = "Dave";
+    Student student = createStudentFrom(name, "male", "3.64");
+    assertThat(student.getName(), equalTo(name));
+  }
 }

@@ -1,11 +1,12 @@
 package edu.pdx.cs410J.whitlock;
 
+import edu.pdx.cs410J.whitlock.Student.MissingCommandLineArguments;
 import edu.pdx.cs410J.whitlock.Student.UnrecognizedGenderException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static edu.pdx.cs410J.whitlock.Student.validateArguments;
+import static edu.pdx.cs410J.whitlock.Student.createStudentFrom;
 import static edu.pdx.cs410J.whitlock.Student.validateGender;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
@@ -46,23 +47,29 @@ public class StudentTest
   }
 
   @Test
-  void zeroArgumentsReturnsMissingCommandLineArguments() throws UnrecognizedGenderException {
-    assertThat(validateArguments(), equalTo("Missing command line arguments"));
+  void zeroArgumentsReturnsMissingCommandLineArguments() {
+    MissingCommandLineArguments ex =
+      assertThrows(MissingCommandLineArguments.class, Student::createStudentFrom);
+    assertThat(ex.getMessage(), equalTo("Missing command line arguments"));
   }
 
   @Test
-  void onlyOneArgumentReturnsMissingGender() throws UnrecognizedGenderException {
-    assertThat(validateArguments("Name"), equalTo("Missing gender"));
+  void onlyOneArgumentReturnsMissingGender() {
+    MissingCommandLineArguments ex =
+      assertThrows(MissingCommandLineArguments.class, () -> createStudentFrom("Name"));
+    assertThat(ex.getMessage(), equalTo("Missing gender"));
   }
 
   @Test
-  void onlyNameAndGenderReturnsMissingGpa() throws UnrecognizedGenderException {
-    assertThat(validateArguments("Name", "Gender"), equalTo("Missing GPA"));
+  void onlyNameAndGenderReturnsMissingGpa() {
+    MissingCommandLineArguments ex =
+      assertThrows(MissingCommandLineArguments.class, () -> createStudentFrom("Name", "Gender"));
+    assertThat(ex.getMessage(), equalTo("Missing GPA"));
   }
 
   @Test
-  void studentEnrolledInZeroClassesIsValid() throws UnrecognizedGenderException {
-    assertThat(validateArguments("Dave", "male", "3.64"), nullValue());
+  void studentEnrolledInZeroClassesIsValid() throws UnrecognizedGenderException, MissingCommandLineArguments {
+    assertThat(createStudentFrom("Dave", "male", "3.64"), nullValue());
   }
   
   @Test

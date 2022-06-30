@@ -49,35 +49,28 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    String errorMessage = null;
     try {
-      errorMessage = validateArguments(args);
-      if (errorMessage != null) {
-        System.err.println(errorMessage);
-      }
+      createStudentFrom(args);
 
-    } catch (UnrecognizedGenderException e) {
+    } catch (UnrecognizedGenderException | MissingCommandLineArguments e) {
       System.err.println(e.getMessage());
     }
 
   }
 
   @VisibleForTesting
-  static String validateArguments(String... args) throws UnrecognizedGenderException {
+  static Student createStudentFrom(String... args) throws UnrecognizedGenderException, MissingCommandLineArguments {
     if (args.length == 0) {
-      return "Missing command line arguments";
+      throw new MissingCommandLineArguments("Missing command line arguments");
 
     } else if (args.length == 1) {
-      return "Missing gender";
+      throw new MissingCommandLineArguments("Missing gender");
 
     } else if (args.length == 2) {
-      return "Missing GPA";
+      throw new MissingCommandLineArguments("Missing GPA");
 
     } else {
-      Gender gender = validateGender(args[1]);
-      if (gender == null) {
-        return "Unrecognized gender";
-      }
+      validateGender(args[1]);
       return null;
     }
   }
@@ -112,6 +105,13 @@ public class Student extends Human {
     @Override
     public String getMessage() {
       return "Unrecognized gender: " + this.getUnrecognizedGender();
+    }
+  }
+
+  @VisibleForTesting
+  static class MissingCommandLineArguments extends Exception {
+    public MissingCommandLineArguments(String message) {
+      super(message);
     }
   }
 }

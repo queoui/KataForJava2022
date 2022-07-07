@@ -10,4 +10,10 @@ public class KataTest
     new Kata();
   }
 
+  @Test
+  void ReturnsFoo(){
+    Kata new_var = new Kata();
+    assertThat(new_var.compute("30"),equalTo("FooBar"));
+  }
+
 }

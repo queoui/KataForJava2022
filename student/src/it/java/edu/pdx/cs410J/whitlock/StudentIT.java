@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
 
@@ -38,6 +39,15 @@ class StudentIT extends InvokeMainTestCase {
   void unrecognizedGenderIsWrittenToStandardError() {
     MainMethodResult result = invokeMain(Student.class, "Dave", "bogus", "3.64");
     assertThat(result.getTextWrittenToStandardError(), equalTo("Unrecognized gender: bogus\n"));
+  }
+
+  @Test
+  void studentNameIsPrintedToStandardOut() {
+    String name = "Dave";
+    MainMethodResult result = invokeMain(Student.class, name, "other", "3.64");
+    assertThat(result.getTextWrittenToStandardError(), emptyString());
+    assertThat(result.getTextWrittenToStandardOut(), containsString(name));
+
   }
 
 }

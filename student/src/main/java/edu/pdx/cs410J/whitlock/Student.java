@@ -55,7 +55,8 @@ public class Student extends Human {
    */
   public static void main(String[] args) {
     try {
-      createStudentFrom(args);
+      Student student = createStudentFrom(args);
+      System.out.println(student);
 
     } catch (UnrecognizedGenderException | MissingCommandLineArguments e) {
       System.err.println(e.getMessage());

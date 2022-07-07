@@ -10,7 +10,8 @@ import java.util.ArrayList;
  */                                                                                 
 public class Student extends Human {
 
-  private Gender gender;
+  private final Gender gender;
+  private final double gpa;
 
   /**
    * Creates a new <code>Student</code>                                             
@@ -28,6 +29,7 @@ public class Student extends Human {
   public Student(String name, ArrayList<String> classes, double gpa, Gender gender) {
     super(name);
     this.gender = gender;
+    this.gpa = gpa;
   }
 
   /**                                                                               
@@ -43,7 +45,7 @@ public class Student extends Human {
    * <code>Student</code>.                                                          
    */                                                                               
   public String toString() {
-    throw new UnsupportedOperationException("Not implemented yet");
+    return getName() + " has a GPA of " + this.gpa;
   }
 
   /**
@@ -62,7 +64,7 @@ public class Student extends Human {
   }
 
   @VisibleForTesting
-  static Student createStudentFrom(String... args) throws UnrecognizedGenderException, MissingCommandLineArguments {
+  static Student createStudentFrom(String... args) throws MissingCommandLineArguments, UnrecognizedGenderException {
     if (args.length == 0) {
       throw new MissingCommandLineArguments("Missing command line arguments");
 
@@ -75,7 +77,9 @@ public class Student extends Human {
     } else {
       String name = args[0];
       Gender gender = validateGender(args[1]);
-      return new Student(name, new ArrayList<>(), 1.23, gender);
+      double gpa = Double.parseDouble(args[2]);
+
+      return new Student(name, new ArrayList<>(), gpa, gender);
     }
   }
 
@@ -96,6 +100,10 @@ public class Student extends Human {
 
   public Gender getGender() {
     return this.gender;
+  }
+
+  public double getGpa() {
+    return gpa;
   }
 
   @VisibleForTesting

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static edu.pdx.cs410J.whitlock.Student.createStudentFrom;
 import static edu.pdx.cs410J.whitlock.Student.validateGender;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -121,5 +121,25 @@ public class StudentTest
   void canCreateStudentWithExpectedGender() throws UnrecognizedGenderException, MissingCommandLineArguments {
     Student student = createStudentFrom("Dave", "male", "3.64");
     assertThat(student.getGender(), equalTo(Gender.MALE));
+  }
+
+  @Test
+  void toStringStartsWithStudentName() {
+    String name = "Name";
+    Student student = createStudentNamed(name);
+    assertThat(student.toString(), startsWith(name));
+  }
+
+  @Test
+  void canCreateStudentWithExpectedGpa() throws UnrecognizedGenderException, MissingCommandLineArguments {
+    Student student = createStudentFrom("Name", "other", "3.45");
+    assertThat(student.getGpa(), equalTo(3.45));
+  }
+
+  @Test
+  void toStringContainsGPA() throws MissingCommandLineArguments, UnrecognizedGenderException {
+    String gpa = "3.64";
+    Student student = createStudentFrom("Name", "male", gpa);
+    assertThat(student.toString(), containsString("has a GPA of " + gpa));
   }
 }

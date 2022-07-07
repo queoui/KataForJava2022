@@ -5,7 +5,7 @@ import com.google.common.annotations.VisibleForTesting;
 /**
  * The main class for the CS410J Phone Bill Project
  */
-public class Project1 {
+public class Project2 {
 
   @VisibleForTesting
   static boolean isValidPhoneNumber(String phoneNumber) {
